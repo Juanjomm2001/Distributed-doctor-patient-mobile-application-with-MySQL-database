@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head> 
+       <!--LOGIN-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <title>
+        Página de acceso PACIENTE
+    </title>
+    <style>
+        body {
+        background-image: linear-gradient(to right, rgba(99, 233, 117, 0), rgb(130, 171, 237));
+        } 
+        #login_paciente{
+        text-align: center;
+     
+        }
+        h1 {
+        font-size: 60px;
+        text-align: center;
+        color: rgb(10, 10, 10)
+        }
+
+        .seccion {
+            display: none;
+        }
+
+        .activa {
+            display: block;
+        }
+
+        .medicacionAlDia {
+            color: rgb(0, 0, 0);
+        }
+
+        .medicacionRetraso {
+            color: rgb(0, 0, 0);
+                }
+        #menu_principal h3 {
+            text-align: center;
+            background-color: #0077b6; 
+            color: #fff;
+            padding: 10px; 
+            margin: 0; 
+        }
+
+        .bienvenida {
+            list-style: none; 
+            padding: 0; 
+        }
+
+       
+        .bienvenida li {
+            font-weight: bold; 
+        }
+        #menu_principal h2 {
+    font-size: 24px;
+    color: #0077b6;
+    text-decoration: underline;
+    }
+
+    .medicacion, .mensajesMed {
+        list-style: none;
+        padding: 0;
+    }
+
+    .mensajesMed {
+        margin-top: 20px;
+    }
+
+    #menu_principal p {
+        font-size: 14px;
+        color: #444;
+        margin-top: 10px;
+    }
+
+    .pedirCita, .boton {
+        margin-top: 20px;
+    }
+
+    .botonP {
+        padding: 5px;
+        border: 1px solid #0077b6;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    .boton {
+        background-color: #0077b6;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .boton:hover {
+        background-color: #005b8c;
+    }
+
+    </style>
+    <script src="rest.js"></script>
+    <script src="cordova.js"></script>
+    <script src="rpc.js"></script>
+    <script src="main_rpc.js"></script>
+</head>
+
+<body>
+
+    <!--LOGIN-->
+    <div id="login_paciente" class="seccion activa">
+        <div class="logo">
+            <img src="logo.png" alt="Logo de Tu Empresa">
+        </div>
+        <h2>Acceso Pacientes</h2>
+        <div class="LOGEATE">Codigo de acceso: <input class="botonP" id="codigo_accesoP" type="text" /></div><br>
+        <button class="boton" onclick="loginPacientes();">Entrar</button>
+        <ul id="cabecera"></ul>
+    </div>
+
+    <!--MENU PRINCIPAL-->
+    <div id="menu_principal" class="seccion">
+        <h3>
+            <ul class="bienvenida" id="mensaje_bienvenida"></ul>
+        </h3>
+        <h2>Listado de medicación</h2>
+
+        <ul class="medicacion" id="listado_medicacion"></ul>
+        <h2>Listado de mensajes del médico</h2>
+        <p>Para recibir mensajes del médico debe realizar una solicitud y esperar a que su médico responda para volver a mandarla</p>
+        <ul class="mensajesMed" id="mensajesMed"></ul>
+        <div class="pedirCita">Pedir cita: <input class="botonP" id="fechaCita" type="date" /></div><br>
+        <button onclick="agregarTomaAEMPS()">Envío de tomas al Ministerio de Sanidad</button><br><br>
+
+        <button class="boton" onclick="pedirCita()">Solicitar</button>
+        <button onclick="salirSistema();cambiarSeccion('menu_principal', 'login_paciente')">Salir</button><br><br>
+
+
+    </div>
+
+    <!--TOMAS DEL PACIENTE-->
+    <div id="s_tomas" class="seccion">
+        <h2>Lista de tomas</h2>
+        <ul id="listaTomas" class="tomas"></ul>
+        <button onclick="cambiarSeccion('s_tomas', 'menu_principal')">Atrás</button><br><br>
+        <button onclick="salirSistema();cambiarSeccion('s_tomas', 'login_paciente')">Salir</button><br><br>
+    </div>
+
+
+</body>
+
+</html>
