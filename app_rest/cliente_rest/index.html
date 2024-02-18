@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        Página de acceso MEDICO
+    </title>
+    <style>
+        body {
+            background-color: rgb(114, 143, 236);
+            color: white;
+            font-family: Helvetica;
+        }
+
+        h1 {
+            color: rgb(0, 0, 0);
+            font-family: Algerian;
+        }
+
+        .seccion {
+            display: none;
+        }
+
+        .activa {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <!--LOGIN-->
+    <div id="S_login" class="seccion activa">
+        <h2>Acceso Médicos</h2>
+        <div class="LOGEATE">Usuario: <input class="botonP" id="login" type="text" /></div><br>
+        <div class="LOGEATE">Contraseña: <input class="botonP" id="password" type="password" /></div><br>
+        <button class="boton" onclick="login();">Entrar</button>
+        <ul id="cabecera"></ul>
+    </div>
+
+    <!--MENU PRINCIPAL-->
+    <div id="S_menu" class="seccion">
+
+        <h3>
+            <ul id="mensaje_bienvenida" class="bienvenida"></ul>
+        </h3> <!--aparece en main-->
+        <h2>Listado de pacientes</h2>
+        <div id="listaPac" class="pacientes">
+            <ul id="lista_pacientes" class="pacientes"></ul> <!--aparece en cargarPaciente-->
+            <h2>Listado de solicitudes</h2>
+            <p>Para poder recibir solicitudes debe enviar un mensaje y esperar a que el paciente le responda para confirmar el mensaje de nuevo</p>
+            <div id="listaMensajes" class="mensajesPac">
+                <ul id="mensajesPac" class="mensajesPac"></ul>
+            </div>
+         
+            <h2>Opciones</h2>
+            <button class="boton" onclick="contabilizarTomasAEMPS(); cambiarSeccion('S_menu', 'Total_tomas')">Contabilidad de las Tomas</button><br><br>
+
+            <button class="boton" onclick="cambiarSeccion('S_menu', 'S_crearPaciente')">Nuevo
+                paciente</button><br><br>
+                <button class="boton" onclick="cambiarSeccion('S_menu', 'S_Medicamento')"> Buscar Medicamento.</button><br><br>
+
+            <button class="boton" onclick="salirSistema();cambiarSeccion('S_menu', 'S_login')">Salir</button><br>
+        
+        </div> 
+    </div>
+
+    <!--VISTA PACIENTE-->
+    <div id="S_vistaPaciente" class="seccion">
+        <h2>Ficha del Paciente</h2>
+        <ul id="lista_paciente" class="pacientes"></ul>
+        <h3>Medicacion del paciente</h3>
+        <ul id="medicacion_pac" class="pacientes"></ul>
+        <ul id="tomas_pac" class="tomas"></ul>
+        <div class="enviarMensaje">Enviar mensaje: <input class="botonP" id="mensaje" type="text" /></div>
+        <button class="boton" onclick="enviarMensaje()">Enviar</button>
+        <button class="boton" onclick="cambiarSeccion('S_vistaPaciente', 'crearMedicacion')">Crear nueva
+            medicación</button><br><br>
+        <button class="boton" onclick="cambiarSeccion('S_vistaPaciente', 'datos_usuario')">Modificar
+            Paciente</button><br><br>
+        <button onclick="cambiarSeccion('S_vistaPaciente', 'S_menu')">Volver al menú</button><br><br>
+        <button onclick="salirSistema();cambiarSeccion('S_vistaPaciente', 'S_login')">Salir</button><br><br>
+
+
+    </div>
+
+    <!--CREAR PACIENTE-->
+    <div id="S_crearPaciente" class="seccion">
+        <h2>Crear nuevo paciente</h2>
+        <ul id="crear_paciente"></ul>
+        <div class="pacientes">Nombre: <input class="botonP" id="nombreP" type="text" /></div>
+        <div class="pacientes">Apellidos: <input class="botonP" id="apellidosP" type="text" /></div>
+        <div class="pacientes">Fecha de nacimiento: <input class="botonP" id="fecha_nacimientoP" type="date" />
+        </div>
+        <div class="pacientes">Genero: <input class="botonP" id="generoP" type="text" /></div>
+        <div class="pacientes">Codigo de acceso: <input class="botonP" id="codigo_accesoP" type="text" /></div>
+        <div class="pacientes">Observaciones: <input class="botonP" id="observacionesP" type="text" /></div><br>
+        <button class="boton" onclick="crearPaciente();cambiarSeccion('S_crearPaciente', 'S_menu')">Crear
+            paciente</button><br><br>
+        <button class="boton" onclick="cambiarSeccion('S_crearPaciente', 'S_menu')">Volver al menú</button><br><br>
+    </div>
+
+    <!--MODIFICAR PACIENTE-->
+    <div id="datos_usuario" class="seccion">
+        <h2>Modificar Paciente</h2>
+        <div class="pacientes">Médico: <input class="botonP" id="medicoPMod" type="text" readonly="readonly"
+                style="background-color:#888383a6;" /></div>
+        <div class="pacientes">Código de acceso: <input class="botonP" id="codigo_accesoPMod" type="text"
+                readonly="readonly" style="background-color:#888383a6;" /></div>
+        <div class="pacientes">Id: <input class="botonP" id="idPMod" type="text" readonly="readonly"
+                style="background-color:#888383a6;" /></div>
+        <div class="pacientes">Nombre: <input class="botonP" id="nombrePMod" type="text" /></div>
+        <div class="pacientes">Fecha de nacimiento: <input class="botonP" id="fecha_nacimientoPMod" type="text"
+                onfocus="(this.type = 'date')" onblur="(this.type = 'text')" /></div>
+        <div class="pacientes">Género: <input class="botonP" id="generoPMod" type="text" /></div>
+        <div class="pacientes">Observaciones: <input class="botonP" id="observacionesPMod" type="text" /></div><br>
+        <div class="pacientes">Medicacion:
+            <ul id="medicacion_pac" class="pacientes"></ul>
+        </div>
+
+        <button class="boton" onclick="crearMedicacion(); cambiarSeccion('datos_usuario', 'crearMedicacion')">Crear
+            nueva medicación</button><br><br>
+        <button class="boton" onclick="actualizarPaciente(); cambiarSeccion('datos_usuario','S_menu')">Guardar
+            paciente</button><br><br>
+        <button class="boton" onclick="cambiarSeccion('datos_usuario','S_vistaPaciente')">Cancelar</button><br><br>
+    </div>
+
+    <!--CREAR MEDICACION-->
+    <div id="crearMedicacion" class="seccion">
+        <h2>Crear nueva medicacion</h2>
+        <ul id="crear_medicacion"></ul>
+        <div class="medicacion">Medicamento: <input class="botonP" id="medicamento" type="text" /></div>
+        <div class="medicacion">Paciente: <input class="botonP" id="pacienteMed" type="text" /></div>
+        <div class="medicacion">Fecha_asignacion: <input class="botonP" id="fecha_asignacionMed" type="date" />
+        </div>
+        <div class="medicacion">Dosis: <input class="botonP" id="dosisMed" type="text" /></div>
+        <div class="medicacion">Tomas: <input class="botonP" id="tomasMedP" type="text" /></div>
+        <div class="medicacion">Frecuencia: <input class="botonP" id="frecuenciaMed" type="text" /></div>
+        <div class="medicacion">Observaciones: <input class="botonP" id="observacionesMed" type="text" /></div><br>
+        <button class="boton" onclick="crearMedicacion();cambiarSeccion('crearMedicacion', 'S_menu')">Crear
+            medicacion</button><br><br>
+        <button class="boton" onclick="cambiarSeccion('crearMedicacion', 'S_menu')">Volver al menú</button><br><br>
+    </div>
+
+    <!--CONTABILIZAR TOMAS-->
+
+    <div id="Total_tomas" class="seccion">
+    <h2>Listado de las tomas totales de la base de datos.</h2>
+        <div id="Total_tomas_ul"></div>
+        <button class="boton" onclick="cambiarSeccion('Total_tomas', 'S_menu')">Volver al menú</button><br><br>
+    </div>
+
+    <!--BUSCAR MEDICACION-->
+
+    <div id="S_Medicamento" class="seccion">
+        <div class="LOGEATE">Buscar Medicamento. <input class="botonP" id="nombre_med" type="text" placeholder="Escribe el nombre..." /></div><br>
+        <button class="boton" onclick="medicamentoAEMPS()">Buscar</button><br><br>
+        <ul id="listaMedicamentos"></ul>
+
+       
+
+        <button class="boton" onclick="cambiarSeccion('S_Medicamento', 'S_menu')">Volver al menú</button><br><br>
+    </div>
+    <script src="main.js"></script>
+    <script src="rest.js"></script>
+
+</body>
+
+</html>
